@@ -10,7 +10,7 @@
     - backend
     - frontend
   tasks: 
-    name: create ec2 instance
+  - name: create ec2 instance
     amazon.aws.ec2_instance: 
       name: "{{ item }}"
       vpc_subnet_id: "{{ subnet_id }}"
