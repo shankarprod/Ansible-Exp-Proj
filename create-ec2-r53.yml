@@ -22,4 +22,4 @@
 
 - name: Display formatted output 
   ansible.builtin.debug:
-        msg: "{{ formatted_output.stdout }}"
+    msg: "{{ formatted_output.stdout }}"
