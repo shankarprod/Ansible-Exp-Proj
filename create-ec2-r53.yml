@@ -20,6 +20,8 @@
     loop: "{{ instances }}"
     register: ec2_instances
 
-  - name: print output
-    ansible.builtin.debug:
-      msg: " {{ ec2_instances }} "
+- shell: echo '{{ ec2_instances | to_json }}' | jq '.'
+  register: formatted_output
+
+- debug:
+    msg: "{{ formatted_output.stdout }}"
