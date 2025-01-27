@@ -1,25 +1,30 @@
-- name: create ec2 and r53 records
-  hosts: local
+---
+- hosts: local
   connection: local
-  vars: 
+  vars:
     subnet_id: subnet-0a0bc321fd3cfee3b
     sg_id: sg-0b3168d993b2098aa
     ami_id: ami-09c813fb71547fc4f
     instances:
-    - mysql
-    - backend
-    - frontend
-  tasks: 
-  - name: create ec2 instance
-    amazon.aws.ec2_instance: 
-      name: "{{ item }}"
-      vpc_subnet_id: "{{ subnet_id }}"
-      instance_type: "t2.micro"
-      security_group: "{{ sg_id }}"
-      image_id: "{{ ami_id }}"
-    loop: "{{ instances }}"
-    register: ec2_instances
+      - mysql
+      - backend
+      - frontend
+  tasks:
+    - name: create ec2 instance
+      amazon.aws.ec2_instance:
+        name: "{{ item }}"
+        vpc_subnet_id: "{{ subnet_id }}"
+        instance_type: "t2.micro"
+        security_group: "{{ sg_id }}"
+        image_id: "{{ ami_id }}"
+      loop: "{{ instances }}"
+      register: ec2_instances
 
-- name: Display formatted output 
-  ansible.builtin.debug:
-    msg: "{{ formatted_output.stdout }}"
+    - name: Print formatted JSON output using jq
+      shell: |
+        echo '{{ ec2_instances | to_json }}' | jq '.'
+      register: formatted_output
+
+    - name: Display formatted output
+      debug:
+        msg: "{{ formatted_output.stdout }}"
