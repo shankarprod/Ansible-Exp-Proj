@@ -1,0 +1,17 @@
+  - name: print output
+    ansible.builtin.debug:
+      msg: " {{ ec2_instances }} "
+
+  instead of above. gave the below code as per gemini
+  gemini https://g.co/gemini/share/2f7b066ed9da 
+
+
+
+- name: Print formatted JSON output using jq
+      shell: |
+        echo '{{ ec2_instances | to_json }}' | jq '.'
+      register: formatted_output
+
+    - name: Display formatted output
+      debug:
+        msg: "{{ formatted_output.stdout }}"
