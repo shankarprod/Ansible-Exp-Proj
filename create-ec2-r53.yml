@@ -20,6 +20,6 @@
     loop: "{{ instances }}"
     register: ec2_instances
 
-
-- debug:
-    msg: "{{ formatted_output.stdout }}"
+- name: Display formatted output 
+      debug:
+        msg: "{{ formatted_output.stdout }}"
