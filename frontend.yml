@@ -33,4 +33,4 @@
   - name: extract the code
     ansible.builtin.unarchive:
     src: /tmp/frontend.zip
-    dest: /app
+    dest: /usr/share/nginx/html
